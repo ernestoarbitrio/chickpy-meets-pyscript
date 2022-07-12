@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>ChickPy meets PyScript</title>
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript">
+      function btnActivation() {
+        if (!document.getElementById("new-chart-script").value.length) {
+          document.getElementById("new-task-btn").disabled = true;
+        } else {
+          document.getElementById("new-task-btn").disabled = false;
+        }
+      }
+    </script>
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env> - './static/wheels/chickpy-0.1.0-py3-none-any.whl' </py-env>
+  </head>
+
+  <body>
+    <py-script src="./script.py"> </py-script>
+    <div class="col-lg-8 mx-auto p-3 py-md-5">
+      <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+        <span class="fs-4">ChickPy meets PyScript</span>
+      </header>
+
+      <div class="container overflow-hidden">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Welcome 👋</h5>
+            <p class="card-text">
+              This is a demo page where I have been able to publish my super
+              mega <u>premature</u> project <b>ChickPy</b>. Thanks to
+              <a href="https://pyscript.net/">PyScript</a> I've integrated my
+              chart generator library directly in a web page.
+            </p>
+            <p>
+              <a href="https://github.com/ernestoarbitrio/chickpy">ChickPy</a>
+              is a <i>wannabe</i> grammar parser with the goal of using a custom
+              scripting language to generate charts with several output options
+              and backends. For example without knowing matplotlib or bokeh you
+              can render charts just writing
+              <code
+                >CREATE CHART "my_chart" VALUES [1,2,3] [4,5,6] TYPE
+                SCATTER;</code
+              >.
+            </p>
+            <p>
+              This web page just intergrates the parser thorugh pyscript just as
+              a demo to explain how it works and the possible integration with
+              other technologies.
+            </p>
+          </div>
+        </div>
+        <hr />
+        <div class="row gy-5">
+          <div class="col-8">
+            <div class="p-3 border bg-light">
+              <div class="row mb-3">
+                <div class="input-group">
+                  <span class="input-group-text">Script</span>
+                  <textarea
+                    class="form-control"
+                    aria-label="Script"
+                    id="new-chart-script"
+                    onkeyup="btnActivation()"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="col-12">
+                <button
+                  id="new-task-btn"
+                  type="submit"
+                  pys-onClick="create_chart"
+                  class="btn btn-primary"
+                  disabled
+                >
+                  Generate chart
+                </button>
+              </div>
+              <hr />
+              <div class="card">
+                <div class="card-body" id="chart-container">
+                  <p class="card-text"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="p-3 border bg-light">
+                <h5>Syntax</h5>
+                <code>
+                  CREATE CHART "&lt;name&gt;" XVALUES &lt;list_of_values&gt;
+                  YVALUES &lt;list_of_values&gt; TYPE &lt;chart_type&gt;;</code
+                >
+                <hr />
+                <code>name: string</code><br />
+                <code>list_of_values: list of numbers e.g. [1,2,3,4]</code
+                ><br />
+                <code
+                  >type: string type of chart. Supported values: BAR, SCATTER,
+                  LINE, default: LINE</code
+                >
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="p-3 border bg-light">
+                <h5>Script Examples</h5>
+                <code>
+                  CREATE CHART "foo" YVALUES [4,5,6,7] XVALUES [-1,2,3,4];</code
+                >
+                <hr />
+                <code
+                  >CREATE CHART "foo" VALUES [-1,2,3,4] [4,5,6,7] TYPE
+                  SCATTER;</code
+                >
+                <hr />
+                <code
+                  >CREATE CHART "foo" XVALUES ["a", "b"] YVALUES [4,5] TYPE
+                  BAR;</code
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer
+      class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+    >
+      <div class="col-md-4 d-flex align-items-center">
+        <a
+          href="/"
+          class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"
+        >
+          <svg class="bi" width="30" height="24">
+            <use xlink:href="#bootstrap" />
+          </svg>
+        </a>
+        <span class="mb-3 mb-md-0 text-muted"
+          >&copy; 2022 Ernesto Arbitrio (aka pamaron)</span
+        >
+      </div>
+
+      <ul
+        class="nav col-md-4 justify-content-end list-unstyled d-flex"
+        style="padding-right: 20px"
+      >
+        <li class="ms-3">
+          <a href="https://www.github.com/ernestoarbitrio"
+            ><i class="lni lni-github-original"></i
+          ></a>
+        </li>
+        <li class="ms-3">
+          <a href="https://www.twitter.com/__pamaron__"
+            ><i class="lni lni-twitter-filled"></i
+          ></a>
+        </li>
+        <li class="ms-3">
+          <a href="https://ernesto.arbitrio.fyi"
+            ><i class="lni lni-website"></i
+          ></a>
+        </li>
+      </ul>
+    </footer>
+  </body>
+</html>
